@@ -1,0 +1,482 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SGAIJEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UnqGenUsuarioKey" />
+          </Key>
+          <Property Name="UnqGenUsuarioKey" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="vchUsuario" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="vchClave" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="bitActivo" Type="bit" Nullable="false" />
+          <Property Name="xmlHistorial" Type="xml" />
+          <Property Name="vchConfirmarClave" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Function Name="prGetDetalleCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CTZ">
+          <Parameter Name="unqCtzDetalleCotizacionKey" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="unqCtzMastCotizacionLink" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="prGetMastCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CTZ">
+          <Parameter Name="unqCtzMastCotizacionKey" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="prMantenimientoDetalleCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CTZ">
+          <Parameter Name="unqCtzDetalleCotizacionKey" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="unqCtzMastCotizacionLink" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="unqGenArticuloLink" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="intCantidad" Type="int" Mode="In" />
+          <Parameter Name="decValorUnitario" Type="decimal" Mode="In" />
+          <Parameter Name="decDescuento" Type="decimal" Mode="In" />
+          <Parameter Name="decMontoTotal" Type="decimal" Mode="In" />
+          <Parameter Name="intTop" Type="int" Mode="In" />
+        </Function>
+        <Function Name="prMantenimientoMastCotizacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CTZ">
+          <Parameter Name="unqCtzMastCotizacionKey" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="unqGenClienteLink" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="unqGenPlantillaLink" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="vchComentarios" Type="varchar" Mode="In" />
+          <Parameter Name="dtmFecha" Type="datetime" Mode="In" />
+          <Parameter Name="NoFolio" Type="varchar" Mode="In" />
+          <Parameter Name="decImporteTotal" Type="decimal" Mode="In" />
+          <Parameter Name="bitAceptada" Type="bit" Mode="In" />
+          <Parameter Name="bitIVA" Type="bit" Mode="In" />
+          <Parameter Name="intTop" Type="int" Mode="In" />
+        </Function>
+        <Function Name="prGetArticulo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GEN">
+          <Parameter Name="unqGenArticuloKey" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="prGetCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GEN">
+          <Parameter Name="unqGenClienteKey" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="prGetPlantilla" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GEN">
+          <Parameter Name="unqGenPlantillaKey" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="prGetTipoArticulo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GEN">
+          <Parameter Name="unqGenTipoArticuloKey" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="prGetTipoCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GEN">
+          <Parameter Name="unqGenTipoClienteKey" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="prMantenimientoArticulo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GEN">
+          <Parameter Name="unqGenArticuloKey" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="unqGenTipoArticuloLink" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="vchCodigoArticulo" Type="varchar" Mode="In" />
+          <Parameter Name="vchDescripcion" Type="varchar" Mode="In" />
+          <Parameter Name="decPrecio" Type="decimal" Mode="In" />
+          <Parameter Name="decDescuento" Type="decimal" Mode="In" />
+          <Parameter Name="intExistencia" Type="int" Mode="In" />
+          <Parameter Name="intCantidadMaxima" Type="int" Mode="In" />
+          <Parameter Name="intCantidadMinima" Type="int" Mode="In" />
+          <Parameter Name="intTop" Type="int" Mode="In" />
+        </Function>
+        <Function Name="prMantenimientoCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GEN">
+          <Parameter Name="unqGenClienteKey" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="unqGenTipoClienteLink" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="vchNombre" Type="varchar" Mode="In" />
+          <Parameter Name="vchApellidoP" Type="varchar" Mode="In" />
+          <Parameter Name="vchApellidoM" Type="varchar" Mode="In" />
+          <Parameter Name="vchRFC" Type="varchar" Mode="In" />
+          <Parameter Name="vchCalle" Type="varchar" Mode="In" />
+          <Parameter Name="vchNoExterior" Type="varchar" Mode="In" />
+          <Parameter Name="vchColonia" Type="varchar" Mode="In" />
+          <Parameter Name="vchCodigoPostal" Type="varchar" Mode="In" />
+          <Parameter Name="vchTelefono" Type="varchar" Mode="In" />
+          <Parameter Name="vchCorreo" Type="varchar" Mode="In" />
+          <Parameter Name="intTop" Type="int" Mode="In" />
+        </Function>
+        <Function Name="prMantenimientoPlantilla" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GEN">
+          <Parameter Name="unqGenPlantillaKey" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="vchDescripcion" Type="varchar" Mode="In" />
+          <Parameter Name="vchPathPlantilla" Type="varchar" Mode="In" />
+          <Parameter Name="intTop" Type="int" Mode="In" />
+        </Function>
+        <Function Name="prMantenimientoTipoArticulo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GEN">
+          <Parameter Name="unqGenTipoArticuloKey" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="vchDescripcion" Type="varchar" Mode="In" />
+          <Parameter Name="intTop" Type="int" Mode="In" />
+        </Function>
+        <Function Name="prMantenimientoTipoCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GEN">
+          <Parameter Name="unqGenTipoClienteKey" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="vchDescripcion" Type="varchar" Mode="In" />
+          <Parameter Name="decDescuento" Type="decimal" Mode="In" />
+          <Parameter Name="intTop" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetLastFolio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SDK">
+          <Parameter Name="Serie" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetNextFolio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SDK">
+          <Parameter Name="Serie" Type="varchar" Mode="In" />
+          <Parameter Name="Folio" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="prGetComentarioXML" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SDK">
+          <Parameter Name="vchId" Type="varchar" Mode="In" />
+          <Parameter Name="vchSchema" Type="varchar" Mode="In" />
+          <Parameter Name="vchTabla" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="prValidaReferencias" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SDK">
+          <Parameter Name="unqKey" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="vchTabla" Type="varchar" Mode="In" />
+          <Parameter Name="vchSchema" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SetComentarioXML" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SDK">
+          <Parameter Name="unqId" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="vchSchema" Type="varchar" Mode="In" />
+          <Parameter Name="vchTabla" Type="varchar" Mode="In" />
+          <Parameter Name="vchUsuario" Type="varchar" Mode="In" />
+          <Parameter Name="Accion" Type="varchar" Mode="In" />
+          <Parameter Name="Comentario" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="SGAIJEModelStoreContainer">
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="GEN" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SGAIJEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SGAIJEEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="prGetDetalleCotizacion" ReturnType="Collection(SGAIJEModel.prGetDetalleCotizacion_Result)">
+            <Parameter Name="unqCtzDetalleCotizacionKey" Mode="In" Type="Guid" />
+            <Parameter Name="unqCtzMastCotizacionLink" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="prMantenimientoDetalleCotizacion" ReturnType="Collection(Guid)">
+            <Parameter Name="unqCtzDetalleCotizacionKey" Mode="In" Type="Guid" />
+            <Parameter Name="unqCtzMastCotizacionLink" Mode="In" Type="Guid" />
+            <Parameter Name="unqGenArticuloLink" Mode="In" Type="Guid" />
+            <Parameter Name="intCantidad" Mode="In" Type="Int32" />
+            <Parameter Name="decValorUnitario" Mode="In" Type="Decimal" />
+            <Parameter Name="decDescuento" Mode="In" Type="Decimal" />
+            <Parameter Name="decMontoTotal" Mode="In" Type="Decimal" />
+            <Parameter Name="intTop" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="prMantenimientoMastCotizacion" ReturnType="Collection(Guid)">
+            <Parameter Name="unqCtzMastCotizacionKey" Mode="In" Type="Guid" />
+            <Parameter Name="unqGenClienteLink" Mode="In" Type="Guid" />
+            <Parameter Name="unqGenPlantillaLink" Mode="In" Type="Guid" />
+            <Parameter Name="vchComentarios" Mode="In" Type="String" />
+            <Parameter Name="dtmFecha" Mode="In" Type="DateTime" />
+            <Parameter Name="NoFolio" Mode="In" Type="String" />
+            <Parameter Name="decImporteTotal" Mode="In" Type="Decimal" />
+            <Parameter Name="bitAceptada" Mode="In" Type="Boolean" />
+            <Parameter Name="bitIVA" Mode="In" Type="Boolean" />
+            <Parameter Name="intTop" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="prGetArticulo" ReturnType="Collection(SGAIJEModel.prGetArticulo_Result)">
+          <Parameter Name="unqGenArticuloKey" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="prGetPlantilla" ReturnType="Collection(SGAIJEModel.prGetPlantilla_Result)">
+          <Parameter Name="unqGenPlantillaKey" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="prGetTipoArticulo" ReturnType="Collection(SGAIJEModel.prGetTipoArticulo_Result)">
+          <Parameter Name="unqGenTipoArticuloKey" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="prGetTipoCliente" ReturnType="Collection(SGAIJEModel.prGetTipoCliente_Result)">
+          <Parameter Name="unqGenTipoClienteKey" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="prMantenimientoArticulo" ReturnType="Collection(Guid)">
+            <Parameter Name="unqGenArticuloKey" Mode="In" Type="Guid" />
+            <Parameter Name="unqGenTipoArticuloLink" Mode="In" Type="Guid" />
+            <Parameter Name="vchCodigoArticulo" Mode="In" Type="String" />
+            <Parameter Name="vchDescripcion" Mode="In" Type="String" />
+            <Parameter Name="decPrecio" Mode="In" Type="Decimal" />
+            <Parameter Name="decDescuento" Mode="In" Type="Decimal" />
+            <Parameter Name="intExistencia" Mode="In" Type="Int32" />
+            <Parameter Name="intCantidadMaxima" Mode="In" Type="Int32" />
+            <Parameter Name="intCantidadMinima" Mode="In" Type="Int32" />
+            <Parameter Name="intTop" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="prMantenimientoCliente" ReturnType="Collection(Guid)">
+            <Parameter Name="unqGenClienteKey" Mode="In" Type="Guid" />
+            <Parameter Name="unqGenTipoClienteLink" Mode="In" Type="Guid" />
+            <Parameter Name="vchNombre" Mode="In" Type="String" />
+            <Parameter Name="vchApellidoP" Mode="In" Type="String" />
+            <Parameter Name="vchApellidoM" Mode="In" Type="String" />
+            <Parameter Name="vchRFC" Mode="In" Type="String" />
+            <Parameter Name="vchCalle" Mode="In" Type="String" />
+            <Parameter Name="vchNoExterior" Mode="In" Type="String" />
+            <Parameter Name="vchColonia" Mode="In" Type="String" />
+            <Parameter Name="vchCodigoPostal" Mode="In" Type="String" />
+            <Parameter Name="vchTelefono" Mode="In" Type="String" />
+            <Parameter Name="vchCorreo" Mode="In" Type="String" />
+            <Parameter Name="intTop" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="prMantenimientoPlantilla" ReturnType="Collection(Guid)">
+            <Parameter Name="unqGenPlantillaKey" Mode="In" Type="Guid" />
+            <Parameter Name="vchDescripcion" Mode="In" Type="String" />
+            <Parameter Name="vchPathPlantilla" Mode="In" Type="String" />
+            <Parameter Name="intTop" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="prMantenimientoTipoArticulo" ReturnType="Collection(Guid)">
+            <Parameter Name="unqGenTipoArticuloKey" Mode="In" Type="Guid" />
+            <Parameter Name="vchDescripcion" Mode="In" Type="String" />
+            <Parameter Name="intTop" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="prMantenimientoTipoCliente" ReturnType="Collection(Guid)">
+            <Parameter Name="unqGenTipoClienteKey" Mode="In" Type="Guid" />
+            <Parameter Name="vchDescripcion" Mode="In" Type="String" />
+            <Parameter Name="decDescuento" Mode="In" Type="Decimal" />
+            <Parameter Name="intTop" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="prGetComentarioXML" ReturnType="Collection(SGAIJEModel.prGetComentarioXML_Result)">
+            <Parameter Name="vchId" Mode="In" Type="String" />
+            <Parameter Name="vchSchema" Mode="In" Type="String" />
+            <Parameter Name="vchTabla" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="prValidaReferencias">
+            <Parameter Name="unqKey" Mode="In" Type="Guid" />
+            <Parameter Name="vchTabla" Mode="In" Type="String" />
+            <Parameter Name="vchSchema" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SetComentarioXML">
+            <Parameter Name="unqId" Mode="In" Type="Guid" />
+            <Parameter Name="vchSchema" Mode="In" Type="String" />
+            <Parameter Name="vchTabla" Mode="In" Type="String" />
+            <Parameter Name="vchUsuario" Mode="In" Type="String" />
+            <Parameter Name="Accion" Mode="In" Type="String" />
+            <Parameter Name="Comentario" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Usuario" EntityType="SGAIJEModel.Usuario" />
+          <FunctionImport Name="GetLastFolio" ReturnType="Collection(String)">
+          <Parameter Name="Serie" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetNextFolio">
+            <Parameter Name="Serie" Mode="In" Type="String" />
+            <Parameter Name="Folio" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="prGetCliente" ReturnType="Collection(SGAIJEModel.prGetCliente_Result)">
+          <Parameter Name="unqGenClienteKey" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="prGetMastCotizacion" ReturnType="Collection(SGAIJEModel.prGetMastCotizacion_Result)">
+            <Parameter Name="unqCtzMastCotizacionKey" Mode="In" Type="Guid" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="prGetDetalleCotizacion_Result">
+          <Property Type="Guid" Name="unqCtzDetalleCotizacionKey" Nullable="false" />
+          <Property Type="Guid" Name="unqCtzMastCotizacionLink" Nullable="false" />
+          <Property Type="Guid" Name="unqGenArticuloLink" Nullable="false" />
+          <Property Type="Int32" Name="intCantidad" Nullable="true" />
+          <Property Type="Decimal" Name="decValorUnitario" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="decDescuento" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="decIVA" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="decMontoTotal" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="prGetArticulo_Result">
+          <Property Type="Guid" Name="unqGenArticuloKey" Nullable="false" />
+          <Property Type="Guid" Name="unqGenTipoArticuloLink" Nullable="true" />
+          <Property Type="String" Name="vchCodigoArticulo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vchDescripcion" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="decPrecio" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="decDescuento" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="intExistencia" Nullable="true" />
+          <Property Type="Int32" Name="intCantidadMaxima" Nullable="true" />
+          <Property Type="Int32" Name="intCantidadMinima" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="prGetPlantilla_Result">
+          <Property Type="Guid" Name="unqGenPlantillaKey" Nullable="false" />
+          <Property Type="String" Name="vchDescripcion" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="vchPathPlantilla" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="prGetTipoArticulo_Result">
+          <Property Type="Guid" Name="unqGenTipoArticuloKey" Nullable="false" />
+          <Property Type="String" Name="vchDescripcion" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="prGetTipoCliente_Result">
+          <Property Type="Guid" Name="unqGenTipoClienteKey" Nullable="false" />
+          <Property Type="String" Name="vchDescripcion" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="decDescuento" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="prGetComentarioXML_Result">
+          <Property Type="String" Name="vchAccion" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="vchUsuario" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="dtmFecha" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="vchComentario" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UnqGenUsuarioKey" />
+          </Key>
+          <Property Name="UnqGenUsuarioKey" Type="Guid" Nullable="false" />
+          <Property Name="vchUsuario" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="vchClave" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="bitActivo" Type="Boolean" Nullable="false" />
+          <Property Name="xmlHistorial" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="vchConfirmarClave" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="prGetCliente_Result">
+          <Property Type="Guid" Name="unqGenClienteKey" Nullable="false" />
+          <Property Type="Guid" Name="unqGenTipoClienteLink" Nullable="true" />
+          <Property Type="String" Name="vchNombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vchApellidoP" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vchApellidoM" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="vchRFC" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="vchCalle" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="vchNoExterior" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="vchColonia" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="vchCodigoPostal" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="vchTelefono" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="vchCorreo" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="prGetMastCotizacion_Result">
+          <Property Type="Guid" Name="unqCtzMastCotizacionKey" Nullable="false" />
+          <Property Type="Guid" Name="unqGenClienteLink" Nullable="false" />
+          <Property Type="Guid" Name="unqGenPlantillaLink" Nullable="false" />
+          <Property Type="String" Name="NoFolio" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="dtmFecha" Nullable="true" Precision="23" />
+          <Property Type="String" Name="vchComentarios" Nullable="true" MaxLength="200" />
+          <Property Type="Decimal" Name="decImporteTotal" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="bitAceptada" Nullable="true" />
+          <Property Type="Boolean" Name="bitIVA" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SGAIJEModelStoreContainer" CdmEntityContainer="SGAIJEEntities" >
+          <FunctionImportMapping FunctionImportName="prGetDetalleCotizacion" FunctionName="SGAIJEModel.Store.prGetDetalleCotizacion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SGAIJEModel.prGetDetalleCotizacion_Result">
+                <ScalarProperty Name="unqCtzDetalleCotizacionKey" ColumnName="unqCtzDetalleCotizacionKey" />
+                <ScalarProperty Name="unqCtzMastCotizacionLink" ColumnName="unqCtzMastCotizacionLink" />
+                <ScalarProperty Name="unqGenArticuloLink" ColumnName="unqGenArticuloLink" />
+                <ScalarProperty Name="intCantidad" ColumnName="intCantidad" />
+                <ScalarProperty Name="decValorUnitario" ColumnName="decValorUnitario" />
+                <ScalarProperty Name="decDescuento" ColumnName="decDescuento" />
+                <ScalarProperty Name="decIVA" ColumnName="decIVA" />
+                <ScalarProperty Name="decMontoTotal" ColumnName="decMontoTotal" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prMantenimientoDetalleCotizacion" FunctionName="SGAIJEModel.Store.prMantenimientoDetalleCotizacion" />
+          <FunctionImportMapping FunctionImportName="prMantenimientoMastCotizacion" FunctionName="SGAIJEModel.Store.prMantenimientoMastCotizacion" />
+          <FunctionImportMapping FunctionImportName="prGetArticulo" FunctionName="SGAIJEModel.Store.prGetArticulo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SGAIJEModel.prGetArticulo_Result">
+                <ScalarProperty Name="unqGenArticuloKey" ColumnName="unqGenArticuloKey" />
+                <ScalarProperty Name="unqGenTipoArticuloLink" ColumnName="unqGenTipoArticuloLink" />
+                <ScalarProperty Name="vchCodigoArticulo" ColumnName="vchCodigoArticulo" />
+                <ScalarProperty Name="vchDescripcion" ColumnName="vchDescripcion" />
+                <ScalarProperty Name="decPrecio" ColumnName="decPrecio" />
+                <ScalarProperty Name="decDescuento" ColumnName="decDescuento" />
+                <ScalarProperty Name="intExistencia" ColumnName="intExistencia" />
+                <ScalarProperty Name="intCantidadMaxima" ColumnName="intCantidadMaxima" />
+                <ScalarProperty Name="intCantidadMinima" ColumnName="intCantidadMinima" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prGetPlantilla" FunctionName="SGAIJEModel.Store.prGetPlantilla">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SGAIJEModel.prGetPlantilla_Result">
+                <ScalarProperty Name="unqGenPlantillaKey" ColumnName="unqGenPlantillaKey" />
+                <ScalarProperty Name="vchDescripcion" ColumnName="vchDescripcion" />
+                <ScalarProperty Name="vchPathPlantilla" ColumnName="vchPathPlantilla" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prGetTipoArticulo" FunctionName="SGAIJEModel.Store.prGetTipoArticulo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SGAIJEModel.prGetTipoArticulo_Result">
+                <ScalarProperty Name="unqGenTipoArticuloKey" ColumnName="unqGenTipoArticuloKey" />
+                <ScalarProperty Name="vchDescripcion" ColumnName="vchDescripcion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prGetTipoCliente" FunctionName="SGAIJEModel.Store.prGetTipoCliente">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SGAIJEModel.prGetTipoCliente_Result">
+                <ScalarProperty Name="unqGenTipoClienteKey" ColumnName="unqGenTipoClienteKey" />
+                <ScalarProperty Name="vchDescripcion" ColumnName="vchDescripcion" />
+                <ScalarProperty Name="decDescuento" ColumnName="decDescuento" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prMantenimientoArticulo" FunctionName="SGAIJEModel.Store.prMantenimientoArticulo" />
+          <FunctionImportMapping FunctionImportName="prMantenimientoCliente" FunctionName="SGAIJEModel.Store.prMantenimientoCliente" />
+          <FunctionImportMapping FunctionImportName="prMantenimientoPlantilla" FunctionName="SGAIJEModel.Store.prMantenimientoPlantilla" />
+          <FunctionImportMapping FunctionImportName="prMantenimientoTipoArticulo" FunctionName="SGAIJEModel.Store.prMantenimientoTipoArticulo" />
+          <FunctionImportMapping FunctionImportName="prMantenimientoTipoCliente" FunctionName="SGAIJEModel.Store.prMantenimientoTipoCliente" />
+          <FunctionImportMapping FunctionImportName="prGetComentarioXML" FunctionName="SGAIJEModel.Store.prGetComentarioXML">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SGAIJEModel.prGetComentarioXML_Result">
+                <ScalarProperty Name="vchAccion" ColumnName="vchAccion" />
+                <ScalarProperty Name="vchUsuario" ColumnName="vchUsuario" />
+                <ScalarProperty Name="dtmFecha" ColumnName="dtmFecha" />
+                <ScalarProperty Name="vchComentario" ColumnName="vchComentario" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prValidaReferencias" FunctionName="SGAIJEModel.Store.prValidaReferencias" />
+          <FunctionImportMapping FunctionImportName="SetComentarioXML" FunctionName="SGAIJEModel.Store.SetComentarioXML" />
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="SGAIJEModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="vchConfirmarClave" ColumnName="vchConfirmarClave" />
+                <ScalarProperty Name="xmlHistorial" ColumnName="xmlHistorial" />
+                <ScalarProperty Name="bitActivo" ColumnName="bitActivo" />
+                <ScalarProperty Name="vchClave" ColumnName="vchClave" />
+                <ScalarProperty Name="vchUsuario" ColumnName="vchUsuario" />
+                <ScalarProperty Name="UnqGenUsuarioKey" ColumnName="UnqGenUsuarioKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetLastFolio" FunctionName="SGAIJEModel.Store.GetLastFolio" />
+          <FunctionImportMapping FunctionImportName="GetNextFolio" FunctionName="SGAIJEModel.Store.GetNextFolio" />
+          <FunctionImportMapping FunctionImportName="prGetCliente" FunctionName="SGAIJEModel.Store.prGetCliente">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SGAIJEModel.prGetCliente_Result">
+                <ScalarProperty Name="unqGenClienteKey" ColumnName="unqGenClienteKey" />
+                <ScalarProperty Name="unqGenTipoClienteLink" ColumnName="unqGenTipoClienteLink" />
+                <ScalarProperty Name="vchNombre" ColumnName="vchNombre" />
+                <ScalarProperty Name="vchApellidoP" ColumnName="vchApellidoP" />
+                <ScalarProperty Name="vchApellidoM" ColumnName="vchApellidoM" />
+                <ScalarProperty Name="vchRFC" ColumnName="vchRFC" />
+                <ScalarProperty Name="vchCalle" ColumnName="vchCalle" />
+                <ScalarProperty Name="vchNoExterior" ColumnName="vchNoExterior" />
+                <ScalarProperty Name="vchColonia" ColumnName="vchColonia" />
+                <ScalarProperty Name="vchCodigoPostal" ColumnName="vchCodigoPostal" />
+                <ScalarProperty Name="vchTelefono" ColumnName="vchTelefono" />
+                <ScalarProperty Name="vchCorreo" ColumnName="vchCorreo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prGetMastCotizacion" FunctionName="SGAIJEModel.Store.prGetMastCotizacion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SGAIJEModel.prGetMastCotizacion_Result">
+                <ScalarProperty Name="unqCtzMastCotizacionKey" ColumnName="unqCtzMastCotizacionKey" />
+                <ScalarProperty Name="unqGenClienteLink" ColumnName="unqGenClienteLink" />
+                <ScalarProperty Name="unqGenPlantillaLink" ColumnName="unqGenPlantillaLink" />
+                <ScalarProperty Name="NoFolio" ColumnName="NoFolio" />
+                <ScalarProperty Name="dtmFecha" ColumnName="dtmFecha" />
+                <ScalarProperty Name="vchComentarios" ColumnName="vchComentarios" />
+                <ScalarProperty Name="decImporteTotal" ColumnName="decImporteTotal" />
+                <ScalarProperty Name="bitAceptada" ColumnName="bitAceptada" />
+                <ScalarProperty Name="bitIVA" ColumnName="bitIVA" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
