@@ -1,0 +1,324 @@
+﻿@model SGAIJE.Models.DetCotizacion
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutWhite.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+
+
+    <div class="col-sm-10 col-sm-offset-1">
+
+        <div class="panel panel-default">
+            <div class="panel-body form-horizontal payment-form">
+                <div class="form-group">
+                    <label class="control-label col-md-3">Descripcion: </label>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", id = "txtDescripcion" } })
+                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-success" onclick="SetProducto()"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Codigo: </label>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control", id = "txtCodigo" } })
+                        @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="control-label col-md-2">Descuento: </label>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.Descuento, new { htmlAttributes = new { @class = "form-control", id = "txtDescuento" } })
+                        @Html.ValidationMessageFor(model => model.Descuento, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Precio: </label>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control", id = "txtPrecio" } })
+                        @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="control-label col-md-2">Cantidad: </label>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control", id = "txtCantidad" } })
+                        @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" title="Guardar y Agregrar" class="btn btn-primary btn-lg" onclick="SetGuardar()"><i class="fa fa-pencil"></i></button>
+        <button type="button" title="Guardar y Salir" class="btn btn-primary btn-lg" onclick="SetGuardarySalir()"><i class="fa fa-save"></i> </button>
+        <button type="button" title="Cerrar" class="btn btn-danger  btn-lg" onclick="ModalArticulo()"><i class="fa fa-times"></i></button>
+
+    </div>
+
+}
+
+<script>
+
+    function ModalArticulo() {
+
+        $('#mdlCrudAltaDetalleArticulo').modal('toggle');
+    };
+
+    function SetProducto() {
+
+        GetProducto(function (data, CANT) {
+            $('#txtDescripcion').val(data.Descripcion);
+            $('#txtCodigo').val(data.Codigo);
+            $('#txtPrecio').val(data.Total);
+            $('#txtDescuento').val(data.Descuento);
+            id = data.id;
+            console.log(CANT)
+            console.log(data);
+        }, false);
+    }
+</script>
+
+<script>
+    function SetGuardarySalir() {
+
+        if ($('#txtCantidad').val() == 0) {
+            $.notify("Ingrese una Cantidad", "warn");
+            return
+        }
+        if ($('#txtPrecio').val() == "") {
+            $.notify("Ingrese un Precio", "warn");
+            return
+        }
+
+        var detalleos = {};
+        var a
+        var MontoTot 
+        detalleos.Cantidad = $('#txtCantidad').val();
+        detalleos.Total = $('#txtPrecio').val();
+        detalleos.Descripcion = $('#txtDescripcion').val();
+        detalleos.codigo = $('#txtCodigo').val();
+        detalleos.Descuento = $('#txtDescuento').val();
+        detalleos.GenArticuloLink = id;
+        console.log(detalleos);
+        $.ajax({
+
+            type: "POST",
+            url: "/Cotizacion/GetOrdenDetalleOS",
+            data: detalleos,
+            success: function (data) {
+                console.log(data)
+                MontoTot = detalleos.Descuento == 0 ? (detalleos.Cantidad * detalleos.Total) : detalleos.Total - ((detalleos.Cantidad * detalleos.Total) * detalleos.Descuento) / 100
+                console.log('ABAJO ES EL MONTO TOTAL')
+                console.log(MontoTot)
+                Grid(data, MontoTot)
+                $('#mdlCrudAltaDetalleArticulo').modal('toggle');
+            },
+            error: function (error) {
+                console.log('Error');
+                console.log(error)
+            }
+
+
+
+        })
+        $("#txtCantidad").val("");
+        $('#txtPrecio').val("");
+        $('#txtDescripcion').val("");
+        $('#txtCodigo').val("");
+        $('#txtDescuento').val("");
+    }
+
+    function SetGuardar() {
+
+        if ($('#txtCantidad').val() == 0) {
+            $.notify("Ingrese una Cantidad", "warn");
+            return
+        }
+        if ($('#txtPrecio').val() == "") {
+            $.notify("Ingrese un Precio", "warn");
+            return
+        }
+
+        var detalleos = {};
+        var a
+        var MontoTot 
+
+        detalleos.Cantidad = $('#txtCantidad').val();
+        detalleos.Total = $('#txtPrecio').val();
+        detalleos.Descripcion = $('#txtDescripcion').val();
+        detalleos.codigo = $('#txtCodigo').val();
+        detalleos.Descuento = $('#txtDescuento').val();
+        detalleos.GenArticuloLink = id;
+        console.log(detalleos);
+        $.ajax({
+
+            type: "POST",
+            url: "/Cotizacion/GetOrdenDetalleOS",
+            data: detalleos,
+            success: function (data) {
+                console.log(data)
+                a = detalleos.Descuento == 0 ? (detalleos.Cantidad * detalleos.Total) : detalleos.Total - ((detalleos.Cantidad * detalleos.Total) * detalleos.Descuento) / 100
+                MontoTot = Math.round(a * 100) / 100; 
+                Grid(data, MontoTot)
+            },
+            error: function (error) {
+                console.log('Error');
+                console.log(error)
+            }
+
+
+
+        })
+        $("#txtCantidad").val("");
+        $('#txtPrecio').val("");
+        $('#txtDescripcion').val("");
+        $('#txtCodigo').val("");
+        $('#txtDescuento').val("");
+    }
+
+
+
+</script>
+
+
+<script>
+    var id = '';
+    var descripcion = '';
+    var Precio
+    var codigo = '';
+    var Descuento
+    var Producto = {};
+    var Call = function () { };
+    var Cantidad = 0;
+    function GetProducto(fn, Qty) {
+        $('#txtQTY').val('1');
+        if (!Qty) {
+            $('#dvQTY').html('');
+        }
+        $.ajax({
+            url: "/CatalogoArticulo/GetArticulo/",
+            success: function (data) {
+                console.log(data);
+                $("#GridSelectorArticulo").dxDataGrid({
+
+                    dataSource: data,
+
+                    filterRow: {
+                        visible: true,
+                        applyFilter: "auto"
+                    },
+                    headerFilter: {
+                        visible: true
+                    },
+                    grouping: {
+                        autoExpandAll: true,
+                    },
+                    groupPanel: {
+                        visible: true
+                    },
+                    stateStoring: {
+                        enabled: true,
+                        type: "localStorage",
+                        storageKey: "storage"
+                    },
+                    grouping: {
+                        contextMenuEnabled: true,
+                        expandMode: "rowClick"
+                    },
+                    groupPanel: {
+                        visible: true
+                    },
+                    pager: {
+                        allowedPageSizes: [5, 8, 15, 30],
+                        showInfo: true,
+                        showNavigationButtons: true,
+                        showPageSizeSelector: true,
+                        visible: true
+                    },
+                    paging: {
+                        pageSize: 5
+                    },
+                    columns: ["CodigoArticulo", "Descripcion", "Precio", "Descuento"],
+                    selection: {
+                        mode: "single"
+                    },
+                    allowColumnReordering: true,
+                    onSelectionChanged: function (data) {
+                        console.log(data)
+                        console.log(data.selectedRowsData[0].GenArticuloKey);
+                        id = data.selectedRowsData[0].GenArticuloKey;
+                        codigo = data.selectedRowsData[0].CodigoArticulo;
+                        descripcion = data.selectedRowsData[0].Descripcion;
+                        Precio = data.selectedRowsData[0].Precio;
+                        Descuento = data.selectedRowsData[0].Descuento;
+                        Producto.Codigo = codigo;
+                        Producto.Descripcion = descripcion;
+                        Producto.Total = Precio;
+                        Producto.id = id;
+                        Producto.Descuento = Descuento;
+
+
+                    }
+                    //
+                });
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        })
+
+        Call = fn;
+        $('#mdlCrudGetRefaccion').modal('toggle');
+    }
+</script>
+
+<script>
+    function Send() {
+        Cantidad = $('#txtQTY').val();
+        Call(Producto, Cantidad);
+        $('#mdlCrudGetRefaccion').modal('toggle');
+
+    }
+
+    function ModalGetRefaccion() {
+
+        $('#mdlCrudGetRefaccion').modal('toggle');
+    };
+
+</script>
+
+<!--GET CODIGO/DESCRIPCION-->
+<div class="modal fade" id="mdlCrudGetRefaccion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="overflow:inherit">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#dd4b39">
+                <img src='@Url.Content("~/Content/SGAIJE.jpeg")' width="80" align="left">
+                <h2 class="modal-title" id="exampleModalLabel" style="color:white">&nbsp;Codigo/Descripcion</h2>
+            </div>
+            <div class="modal-body">
+                <div id="GridSelectorArticulo"></div>
+
+            </div>
+            <div class="modal-footer">
+                @*<div id="dvQTY">
+                        <div class="form-group">
+                            Cantidad: <input type="number" class="form-control" id="txtQTY" />
+                        </div>
+                    </div>*@
+                <button type="button" class="btn btn-primary" onclick="Send()">Seleccionar</button>
+                <button type="button" class="btn btn-danger" onclick="ModalGetRefaccion()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

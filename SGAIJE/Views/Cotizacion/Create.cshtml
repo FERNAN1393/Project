@@ -1,0 +1,168 @@
+﻿@model SGAIJE.Models.MastCotizacion
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutWhite.cshtml";
+
+}
+
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+
+
+        <script>
+        var DsCliente = @Html.Raw(Json.Encode(ViewBag.DsCliente))
+                 $(function () {
+                $("#ComboCliente").dxSelectBox({
+                    items: DsCliente,
+                    displayExpr: "vchNombre",
+                    valueExpr: "unqGenClienteKey",
+                    name: "cboCliente",
+                    searchEnabled: true
+                     });
+                })
+
+        </script>
+        <script>
+        var DsPlantilla = @Html.Raw(Json.Encode(ViewBag.DsPlantilla))
+                 $(function () {
+                $("#ComboPlantilla").dxSelectBox({
+                    items: DsPlantilla,
+                    displayExpr: "vchDescripcion",
+                    valueExpr: "unqGenPlantillaKey",
+                    name: "cboPlantilla",
+                    searchEnabled: true
+                     });
+                })
+
+        </script>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <br />
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div Class="panel panel-default">
+                    <div Class="panel-body form-horizontal payment-form">
+                        <br />
+                        <div class="form-group">
+                            <Label for="date" class="col-sm-2 control-label">No Folio:</Label>
+                            <div Class="col-sm-3">
+                                @Html.EditorFor(model => model.NoFolio, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @Html.ValidationMessageFor(model => model.NoFolio, "", new { @class = "text-danger" })
+                            </div>
+                            <Label for="date" class="col-sm-2 control-label">Cliente:</Label>
+                            <div Class="col-sm-5">
+                                <div id="ComboCliente">
+                                </div>
+                            </div>
+
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <Label for="date" class="col-sm-2 control-label">Fecha:</Label>
+                            <div Class="col-sm-3">
+                                @Html.EditorFor(model => model.Fecha, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control", @Type = "date" } })
+                                @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+                            </div>
+                            <Label for="date" class="col-sm-2 control-label">Plantilla:</Label>
+                            <div Class="col-sm-5">
+                                <div id="ComboPlantilla">
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <Label for="date" class="col-sm-2 control-label">Aceptado:</Label>
+                            <div Class="col-sm-1">
+                                @Html.CheckBoxFor(model => model.Aceptada, new { @class = "", style = "margin:10px" })
+                            </div>
+                            <Label for="date" class="col-sm-1 control-label">IVA:</Label>
+                            <div Class="col-sm-1">
+                                @*@Html.CheckBoxFor(model => model.IVA, new { @class = "", style = "margin:10px" })*@
+                                <input type="checkbox" id="IVA" onclick="obtenerIva(this)" style="margin:10px">
+                            </div>
+                            <div class="form-group">
+                                <Label for="date" class="col-sm-2 control-label">Importe:</Label>
+                                <div Class="col-sm-4">
+                                    @Html.EditorFor(model => model.ImporteTotal, new { htmlAttributes = new { @class = "form-control", id = "txtImporteTotal" } })
+                                    @Html.ValidationMessageFor(model => model.ImporteTotal, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div Class="form-group">
+                            <Label for="date" id="Comentarios" class="col-sm-7 control-label">Comentarios:</Label>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10 col-md-offset-1">
+                                <textarea class="form-control" id="Comentarios" rows="2"></textarea>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div Class="nav-tabs-custom" id="DetOrden">
+            <ul Class="nav nav-tabs">
+                <li Class="active"><a href="#tab_ref" data-toggle="tab" aria-expanded="true">Detalle Cotizacion</a></li>
+            </ul>
+            <div Class="tab-content">
+                <div Class="tab-pane active" id="tab_ref">
+
+                    <p>
+                        <Button type="button" Class="btn btn-default" data-toggle="modal" data-target="#mdlCrudAltaDetalleArticulo" onclick="AltaArticulo()"><i Class="fa fa-plus"></i></Button>
+                        <Button type="button" Class="btn btn-danger" onclick="BajaArticulo()"><i Class="fa fa-trash"></i></Button>
+                    </p>
+                    <div Class="dx-viewport">
+                        <div Class="demo-container">
+                            <div id="dgvRefacciones"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.tab-content -->
+        </div>
+
+
+        <div class="form-group">
+            <div class="modal-footer">
+                <button type="submit" value="Guardar" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+
+</script>
+
+<!-- ARTICULOS /-->
+<div class="modal fade" id="mdlCrudAltaDetalleArticulo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#dd4b39">
+                <img src='@Url.Content("~/Content/SGAIJE.jpeg")' width="80" align="left">
+                <h2 class="modal-title" id="mdlcrudtitleDetArticulo" style="color:white"></h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="mdlContentAltaDetalleArticulo">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/CrudGen/CrudGenDetalleCotizacion.js"></script>
+

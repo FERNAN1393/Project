@@ -1,0 +1,61 @@
+﻿@model IEnumerable<SGAIJE.Models.Comentario>
+
+@{
+    ViewBag.Title = "Comentario";
+    Layout = null;
+}
+
+<div class="dx-viewport">
+    <div class="demo-container ">
+        <div id="dgvhistorial"></div>
+    </div>
+</div>
+
+
+
+<script>
+
+    var DsComentarios = @Html.Raw(Json.Encode(Model))
+    $(function () {
+            $("#dgvhistorial").dxDataGrid({
+                dataSource: DsComentarios,
+                showColumnLines: true,
+                showRowLines: true,
+                rowAlternationEnabled: true,
+                showBorders: true,
+                rowTemplate: function (container, item) {
+                    var data = item.data,
+                        markup = "<tbody >" +
+                            "<tr class='dx-row main-row'>" +
+
+                            "<td width='280px'>" + data.Usuario + "</td>" +
+                            "<td width='92px'>" + data.Accion + "</td>" +
+                            "<td width='190px'>" + data.Fecha + "</td>" +
+                                       "</tr>" +
+                            "<tr class='notes-row'>" +
+                            "</tr>" +
+                            "</tbody>";
+
+                    container.append(markup);
+                },
+
+                columnAutoWidth: true,
+                columns: [
+                    {
+                        dataField: "Usuario",
+                        caption: "Usuario",
+                        width: 280
+                    }, {
+                        dataField: "Accion",
+                        caption: "Acción",
+                        width: 92
+                    }, {
+                        dataField: "Fecha",
+                        caption: "Fecha",
+                        width: 190
+                    }]
+
+        });
+    });
+</script>
+

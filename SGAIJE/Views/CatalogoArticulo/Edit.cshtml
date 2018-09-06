@@ -1,0 +1,108 @@
+﻿@model SGAIJE.Models.CatalogoArticulo
+
+@{
+    ViewBag.Title = "Editar";
+    Layout = "~/Views/Shared/_LayoutWhite.cshtml";
+}
+
+
+
+@using (Html.BeginForm())
+{
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <br />
+        <!--SCRIPT TIPO ARTICULOS-->
+        <script>
+            var DsTipoArticulos = @Html.Raw(Json.Encode(ViewBag.DsTipoArticulos))
+                 $(function () {
+                    $("#dxCboTipoArticulo").dxSelectBox({
+                         value:'@Model.GenTipoArticuloLink.ToString()',
+                         items: DsTipoArticulos,
+                         displayExpr: "vchDescripcion",
+                         valueExpr: "unqGenTipoArticuloKey",
+                         name: "cboTipoArticulo",
+                         searchEnabled: true
+                    });
+                    console.log(value)
+            })
+        console.log(DsTipoArticulos)
+        </script>
+
+        <div class="form-group">
+            <div class="dx-viewport">
+                <div class="demo-container">
+                    <div class="control-label col-md-2">Tipo de articulo:</div>
+                    <div class="col-md-6">
+
+                        <div id="dxCboTipoArticulo"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Codigo de articulo: </label>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.CodigoArticulo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CodigoArticulo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Descripcion: </label>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Precio: </label>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Precio, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Precio, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Descuento:</label>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Descuento, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Descuento, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Existencia:</label>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Existencia, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Existencia, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Cantidad maxima:</label>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.CantidadMaxima, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CantidadMaxima, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Cantidad minima:</label>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.CantidadMinima, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CantidadMinima, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="modal-footer">
+                <button type="submit" value="Guardar" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+}
+
+
+

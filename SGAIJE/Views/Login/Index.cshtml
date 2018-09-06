@@ -1,0 +1,77 @@
+﻿@model SGAIJE.DataContext.Usuario
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+
+    <link href="~/Content/Login.css" rel="stylesheet" />
+</head>
+<body>
+    @using (Html.BeginForm("Authorize", "Login", FormMethod.Post))
+    {
+        <div class="wrapper fadeInDown" id="prueba">
+            <div id="formContent">
+                <!-- Tabs Titles -->
+                <!-- Icon -->
+                <div class="fadeIn first">
+                    <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
+                </div>
+                <!-- Login Form -->
+                <form>
+                    @Html.EditorFor(Model => Model.vchUsuario, new { htmlAttributes = new { @class = "fadeIn second", placeholder = "Usuario" } })
+                    @*<input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario">*@
+                    @Html.EditorFor(Model => Model.vchClave, new { htmlAttributes = new { @class = "fadeIn third", placeholder = "Contraseña" } })
+                    @*<input type="text" id="password" class="fadeIn third" name="login" placeholder="Contraseña">*@
+                    <input type="submit" class="fadeIn fourth" value="Iniciar">
+                </form>
+
+                <!-- Remind Passowrd -->
+                <div id="formFooter">
+                    <a class="underlineHover" onclick="$('#formContent').hide(); $('#signup').show();">No tienes cuenta?</a>
+                </div>
+            </div>
+
+        </div>
+    }
+    @using (Html.BeginForm("Create", "Login", FormMethod.Post))
+    {
+        <div class="wrapper fadeInDown" id="contenido">
+            <div id="signup" style="display: none;">
+                <!-- Tabs Titles -->
+                <!-- Icon -->
+                <div class="fadeIn first">
+                    <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
+                </div>
+                <!-- Login Form -->
+                <form>
+                    @Html.EditorFor(Model => Model.vchUsuario, new { htmlAttributes = new { @class = "fadeIn second", placeholder = "Usuario" } })
+                    @*<input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario">*@
+                    @Html.EditorFor(Model => Model.vchClave, new { htmlAttributes = new { @class = "fadeIn third", placeholder = "Contraseña" } })
+                    @Html.EditorFor(Model => Model.vchConfirmarClave, new { htmlAttributes = new { @class = "fadeIn third", placeholder = "Confirmar contraseña" } })
+                    @*<input type="text" id="password" class="fadeIn third" name="login" placeholder="Contraseña">*@
+                    <input type="submit" class="fadeIn fourth" value="Iniciar">
+                </form>
+
+                <!-- Remind Passowrd -->
+
+            </div>
+        </div>
+    }
+
+</body>
+
+</html>
+
+
+<script src="~/Scripts/jquery-2.2.3.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

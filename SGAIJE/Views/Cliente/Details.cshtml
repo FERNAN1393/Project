@@ -1,0 +1,68 @@
+﻿@model SGAIJE.Models.Cliente 
+
+
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutWhite.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class=" table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NombreCompleto)
+                    </th>
+                   
+                    <th>
+                        @Html.DisplayNameFor(model => model.Telefono)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Correo)
+                    </th>
+                  
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.NombreCompleto)
+                    </td>
+                  
+                    <td>
+                        @Html.DisplayFor(model => model.Telefono)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Correo)
+                    </td>
+                   
+
+                    <td>
+                        <button type="button" class="btn btn-primary" onclick="Editar('@Model.GenClienteKey')">Editar</button>
+                        <button type="button" class="btn btn-danger" onclick="Eliminar('@Model.GenClienteKey')">Eliminar</button>
+                        <button type="button" class="btn btn-default" onclick="Historial('@Model.GenClienteKey');">Historial</button>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+</div>
+<script>
+    function Historial(id) {
+
+        $.ajax({
+            url: "/Cliente/GetComentario/" + id,
+            success: function (data) {
+                $('#mdlHistorialContent').html(data);
+                $('#mdlHistorial').modal('toggle');
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    }
+
+</script>

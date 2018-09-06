@@ -1,0 +1,65 @@
+﻿@model SGAIJE.Models.CatalogoArticulo
+
+
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutWhite.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class=" table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CodigoArticulo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Descripcion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TipoArticulo)
+                    </th>
+
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.CodigoArticulo)
+                    </td>
+                    <td>
+                        @Html.Raw(Model.Descripcion)
+                    </td>
+                    <td>
+                        @Html.Raw(Model.TipoArticulo)
+                    </td>
+
+                    <td>
+                        <button type="button" class="btn btn-primary" onclick="Editar('@Model.GenArticuloKey')">Editar</button>
+                        <button type="button" class="btn btn-danger" onclick="Eliminar('@Model.GenArticuloKey')">Eliminar</button>
+                        <button type="button" class="btn btn-default" onclick="Historial('@Model.GenArticuloKey');">Historial</button>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+</div>
+<script>
+    function Historial(id) {
+
+        $.ajax({
+            url: "/CatalogoArticulo/GetComentario/" + id,
+            success: function (data) {
+                $('#mdlHistorialContent').html(data);
+                $('#mdlHistorial').modal('toggle');
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    }
+
+</script>
